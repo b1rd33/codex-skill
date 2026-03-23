@@ -38,7 +38,7 @@ codex --search exec -m gpt-5.4 -c model_reasoning_effort="high" --full-auto "$AR
 codex --search exec -m gpt-5.4 -c model_reasoning_effort="xhigh" --full-auto "$ARGUMENTS"
 ```
 
-> **Note:** `--full-auto` sets `--sandbox workspace-write --ask-for-approval on-request`. Global flags like `--search` must come **before** `exec`.
+> **Note:** `--full-auto` sets `--sandbox workspace-write` and runs without interactive approval prompts in `exec` mode. Global flags like `--search` must come **before** `exec`.
 
 ---
 
@@ -472,10 +472,9 @@ persistence = "save-all"     # "save-all" | "none"
 [shell_environment_policy]
 inherit = "all"              # "all" | "core" | "none"
 
-# Multi-agent
+# Features
 [features]
 multi_agent = true           # Enable subagent spawning
-web_search = true            # Enable web search
 fast_mode = true             # Enable fast mode
 ```
 
@@ -484,8 +483,8 @@ fast_mode = true             # Enable fast mode
 ## Debugging & Troubleshooting
 
 ```bash
-# Debug mode — see full output without auto-approval
-codex exec -m gpt-5.4 -c model_reasoning_effort="medium" -a untrusted -s workspace-write "your task"
+# Debug mode — see full output with manual approval
+codex -a untrusted exec -m gpt-5.4 -c model_reasoning_effort="medium" -s workspace-write "your task"
 
 # Check health
 codex --version

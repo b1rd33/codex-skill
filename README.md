@@ -84,7 +84,7 @@ codex --search exec -m gpt-5.4 -c model_reasoning_effort="xhigh" --full-auto "ta
 |------|--------|
 | Typos, formatting | `turbo` |
 | Bug fixes | `balanced` |
-| Code review | `quality` |
+| Code review | `balanced` or `quality` |
 | Security audit | `quality` or `max` |
 | Architecture | `max` |
 | Test generation | `balanced` |
@@ -176,10 +176,11 @@ Lean by design. The skill is a single file — no dependencies, no build steps.
 
 ```bash
 cd ~/.claude/skills/codex
-bash tests/test_flags.sh
+bash tests/test_flags.sh           # Full suite (live API calls, requires auth)
+bash tests/test_flags.sh --quick   # Instant checks only (no API calls)
 ```
 
-Tests validate all 4 presets, sandbox modes, flag positioning, subcommands, MCP commands, and model availability against your installed Codex CLI. Requires authentication.
+Quick mode validates subcommands, MCP/cloud commands, feature flags, exec/global flag acceptance, model availability, and auth commands — all without API calls. Full mode adds live preset execution and sandbox tests.
 
 ## Contributing
 
