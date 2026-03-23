@@ -162,13 +162,24 @@ See [SKILL.md](SKILL.md) for full reference documentation.
 
 ```
 codex-skill/
-├── SKILL.md    # The skill file (loaded by Claude Code)
-├── README.md   # This file
-├── LICENSE     # MIT
-└── .gitignore
+├── SKILL.md             # The skill file (loaded by Claude Code)
+├── README.md            # This file
+├── LICENSE              # MIT
+├── .gitignore
+└── tests/
+    └── test_flags.sh    # Validates all presets, flags, and subcommands
 ```
 
-Lean by design. The skill is a single file — no scripts, no dependencies, no build steps.
+Lean by design. The skill is a single file — no dependencies, no build steps.
+
+### Running tests
+
+```bash
+cd ~/.claude/skills/codex
+bash tests/test_flags.sh
+```
+
+Tests validate all 4 presets, sandbox modes, flag positioning, subcommands, MCP commands, and model availability against your installed Codex CLI. Requires authentication.
 
 ## Contributing
 

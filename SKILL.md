@@ -85,13 +85,14 @@ All current models default to `medium`. Supported levels vary by model.
 When using a sandbox other than `workspace-write`, use explicit flags instead of `--full-auto`:
 
 ```bash
-codex exec \
+codex -a on-request exec \
   -m {model} \
   -c model_reasoning_effort="{effort}" \
-  -a on-request \
   -s {sandbox} \
   "{task}"
 ```
+
+> **Note:** `-a` (approval policy) is a **global** flag and must come before `exec`. `-s` (sandbox) and `-m` (model) work on both global and exec level.
 
 For `workspace-write` with auto-approval, use `--full-auto`:
 
