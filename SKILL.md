@@ -1,6 +1,6 @@
 ---
 name: codex
-description: Delegate coding tasks to OpenAI Codex CLI. Supports presets (turbo/balanced/quality/max) or custom model+effort selection. Use when user wants to leverage GPT-5.4/Codex models for code analysis, refactoring, security audits, or complex transformations. Also covers MCP server management and advanced CLI features.
+description: Delegate coding tasks to OpenAI Codex CLI. Supports presets (turbo/balanced/quality/max) or custom model+effort selection. Use when user wants to leverage GPT-5.5/Codex models for code analysis, refactoring, security audits, or complex transformations. Also covers MCP server management and advanced CLI features.
 ---
 
 # OpenAI Codex CLI Integration
@@ -15,10 +15,10 @@ Usage: `/codex [preset] [task]` or `/codex [task]` (will ask for preferences)
 
 | Preset | Model | Effort | Use Case |
 |--------|-------|--------|----------|
-| `turbo` | gpt-5.4 | low | Near-instant tasks, typos, formatting |
-| `balanced` | gpt-5.4 | medium | Standard tasks, bug fixes (DEFAULT) |
-| `quality` | gpt-5.4 | high | Complex refactors, code review |
-| `max` | gpt-5.4 | xhigh | Critical/architectural work |
+| `turbo` | gpt-5.5 | low | Near-instant tasks, typos, formatting |
+| `balanced` | gpt-5.5 | medium | Standard tasks, bug fixes (DEFAULT) |
+| `quality` | gpt-5.5 | high | Complex refactors, code review |
+| `max` | gpt-5.5 | xhigh | Critical/architectural work |
 
 All presets use `workspace-write` sandbox and `--full-auto` mode.
 
@@ -26,16 +26,16 @@ All presets use `workspace-write` sandbox and `--full-auto` mode.
 
 ```bash
 # turbo — fast, light reasoning
-codex --search exec -m gpt-5.4 -c model_reasoning_effort="low" --full-auto "$ARGUMENTS"
+codex --search exec -m gpt-5.5 -c model_reasoning_effort="low" --full-auto "$ARGUMENTS"
 
 # balanced — good default
-codex --search exec -m gpt-5.4 -c model_reasoning_effort="medium" --full-auto "$ARGUMENTS"
+codex --search exec -m gpt-5.5 -c model_reasoning_effort="medium" --full-auto "$ARGUMENTS"
 
 # quality — deep analysis
-codex --search exec -m gpt-5.4 -c model_reasoning_effort="high" --full-auto "$ARGUMENTS"
+codex --search exec -m gpt-5.5 -c model_reasoning_effort="high" --full-auto "$ARGUMENTS"
 
 # max — highest capability
-codex --search exec -m gpt-5.4 -c model_reasoning_effort="xhigh" --full-auto "$ARGUMENTS"
+codex --search exec -m gpt-5.5 -c model_reasoning_effort="xhigh" --full-auto "$ARGUMENTS"
 ```
 
 > **Note:** `--full-auto` sets `--sandbox workspace-write` and runs without interactive approval prompts in `exec` mode. Global flags like `--search` must come **before** `exec`.
@@ -50,12 +50,11 @@ If user doesn't specify a preset, ASK them to choose:
 
 | Model | Best For | Notes |
 |-------|----------|-------|
-| `gpt-5.4` | Flagship frontier model, strongest reasoning + agentic workflows | Default, recommended |
+| `gpt-5.5` | Frontier flagship for complex coding, research, and real-world work | **Default, recommended** |
+| `gpt-5.4` | Previous flagship — strong reasoning + agentic workflows | Solid fallback |
 | `gpt-5.4-mini` | Smaller frontier model, faster and cheaper | Good cost/quality tradeoff |
 | `gpt-5.3-codex` | Frontier Codex-optimized agentic coding model | Coding specialist |
-| `gpt-5.2-codex` | Frontier agentic coding model | Previous generation |
-| `gpt-5.2` | Long-running agents and professional work | General purpose |
-| `gpt-5.1-codex-max` | Deep and fast reasoning | Heavy computation |
+| `gpt-5.2` | Long-running agents and professional work | Older general purpose |
 
 > **Tip:** Run `/model list` during interactive sessions to see all available models.
 
@@ -70,7 +69,7 @@ All current models default to `medium`. Supported levels vary by model.
 | `high` | Complex analysis | Slow/High |
 | `xhigh` | Critical decisions | Slowest/Highest |
 
-> **Note:** `minimal` is only supported on `gpt-5`. Most models support `low|medium|high|xhigh`.
+> **Note:** All currently listed models (gpt-5.2 through gpt-5.5) support `low|medium|high|xhigh` with default `medium`. The `minimal` effort is no longer offered by any visible Codex CLI model — drop it from automation that targeted gpt-5.
 
 ### 3. Sandbox Mode
 
@@ -225,8 +224,8 @@ codex
 > create a new page in my Tasks database
 
 # Non-interactive
-codex exec -m gpt-5.4 --full-auto "list my recent Notion pages"
-codex exec -m gpt-5.4 --full-auto "create a meeting notes page in Notion for today"
+codex exec -m gpt-5.5 --full-auto "list my recent Notion pages"
+codex exec -m gpt-5.5 --full-auto "create a meeting notes page in Notion for today"
 ```
 
 **If Notion tools aren't working:**
@@ -321,7 +320,7 @@ Web search is a global flag that must come before `exec`:
 
 ```bash
 # Enable web search (live)
-codex --search exec -m gpt-5.4 --full-auto "use latest Next.js patterns for this route"
+codex --search exec -m gpt-5.5 --full-auto "use latest Next.js patterns for this route"
 ```
 
 Or configure in `~/.codex/config.toml`:
@@ -333,10 +332,10 @@ web_search = "live"    # "disabled" | "cached" | "live"
 
 ```bash
 # Single image
-codex exec -i screenshot.png -m gpt-5.4 --full-auto "fix the UI layout issues shown here"
+codex exec -i screenshot.png -m gpt-5.5 --full-auto "fix the UI layout issues shown here"
 
 # Multiple images
-codex exec -i design.jpg -i mockup.png -m gpt-5.4 --full-auto "implement this design"
+codex exec -i design.jpg -i mockup.png -m gpt-5.5 --full-auto "implement this design"
 ```
 
 ### Session Management
@@ -353,16 +352,16 @@ codex fork <SESSION_ID>           # Fork specific session
 
 ```bash
 # Save final output to file
-codex exec -o result.md -m gpt-5.4 --full-auto "analyze this codebase"
+codex exec -o result.md -m gpt-5.5 --full-auto "analyze this codebase"
 
 # JSON event stream
-codex exec --json -m gpt-5.4 --full-auto "review this code"
+codex exec --json -m gpt-5.5 --full-auto "review this code"
 
 # Structured output with schema
-codex exec --output-schema schema.json -m gpt-5.4 --full-auto "extract API endpoints"
+codex exec --output-schema schema.json -m gpt-5.5 --full-auto "extract API endpoints"
 
 # Non-persisted session
-codex exec --ephemeral -m gpt-5.4 --full-auto "quick analysis"
+codex exec --ephemeral -m gpt-5.5 --full-auto "quick analysis"
 ```
 
 ### Code Review
@@ -381,7 +380,7 @@ codex review "focus on security"  # Custom review instructions
 ### Multi-Directory Access
 
 ```bash
-codex exec --add-dir /path/to/shared-lib -m gpt-5.4 --full-auto "refactor using shared types"
+codex exec --add-dir /path/to/shared-lib -m gpt-5.5 --full-auto "refactor using shared types"
 ```
 
 ### Local Models via Ollama
@@ -410,8 +409,8 @@ codex exec -p my-profile --full-auto "task"
 ### Pipe Input
 
 ```bash
-cat file.py | codex exec -m gpt-5.4 --full-auto "review this code"
-git diff | codex exec -m gpt-5.4 --full-auto "summarize changes"
+cat file.py | codex exec -m gpt-5.5 --full-auto "review this code"
+git diff | codex exec -m gpt-5.5 --full-auto "summarize changes"
 ```
 
 ### Codex as MCP Server
@@ -484,7 +483,7 @@ fast_mode = true             # Enable fast mode
 
 ```bash
 # Debug mode — see full output with manual approval
-codex -a untrusted exec -m gpt-5.4 -c model_reasoning_effort="medium" -s workspace-write "your task"
+codex -a untrusted exec -m gpt-5.5 -c model_reasoning_effort="medium" -s workspace-write "your task"
 
 # Check health
 codex --version
@@ -514,5 +513,5 @@ codex --no-alt-screen exec --full-auto "task"
 
 1. Codex CLI installed: `npm i -g @openai/codex` or `brew install --cask codex`
 2. Authenticated: Run `codex login` and follow prompts (or `codex login --with-api-key` for CI)
-3. Verify: `codex --version`
+3. Verify: `codex --version` (last verified against `codex-cli 0.125.0`)
 4. MCP servers (optional): Configure in `~/.codex/config.toml`, authenticate with `codex mcp login <name>`
